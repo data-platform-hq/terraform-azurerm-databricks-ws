@@ -50,9 +50,9 @@ variable "sku" {
 }
 
 variable "public_network_access_enabled" {
-  type        = string
+  type        = bool
   description = "Allow public access for accessing workspace: [true|false]"
-  default     = "true"
+  default     = true
 }
 
 variable "tags" {
@@ -62,9 +62,9 @@ variable "tags" {
 }
 
 variable "no_public_ip" {
-  type        = string
+  type        = bool
   description = "Are public IP Addresses not allowed?: [true|false]"
-  default     = "true"
+  default     = true
 }
 
 variable "nsg_rules_required" {
