@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.0.0...v1.1.0) (2022-12-22)
+
+
+### Features
+
+* access connector ([71e0b16](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/71e0b167d87dde592d61bba3b429bdce529df8b5))
+
 # 1.0.0 (2022-10-21)
 
 
