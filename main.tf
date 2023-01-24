@@ -30,3 +30,26 @@ resource "azurerm_databricks_access_connector" "this" {
     type = "SystemAssigned"
   }
 }
+
+resource "azurerm_monitor_diagnostic_setting" "this" {
+  for_each = length(azurerm_databricks_workspace.this.id) != 0 && length(var.log_analytics_workspace) != 0 ? { for k, v in var.log_analytics_workspace : k => v } : {}
+
+  name                           = "monitoring-${var.project}-${var.env}-${var.location}"
+  target_resource_id             = azurerm_databricks_workspace.this.id
+  log_analytics_workspace_id     = each.value
+  log_analytics_destination_type = var.destination_type
+
+  dynamic "enabled_log" {
+    for_each = var.log_category_list
+    content {
+      category = enabled_log.value
+
+      retention_policy {
+        enabled = true
+        days    = var.log_retention_days
+      }
+    }
+  }
+
+  depends_on = [azurerm_databricks_workspace.this]
+}

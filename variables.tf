@@ -85,3 +85,59 @@ variable "access_connector_enabled" {
   description = "Provides an ability to provision Databricks Access Connector which is required for Unity Catalog feature"
   default     = false
 }
+######
+variable "log_analytics_workspace" {
+  type        = map(string)
+  description = "Log Analytics Workspace Name to ID map"
+  default     = {}
+}
+
+variable "log_category_list" {
+  default = [
+    "dbfs",
+    "clusters",
+    "accounts",
+    "jobs",
+    "notebook",
+    "ssh",
+    "workspace",
+    "secrets",
+    "sqlPermissions",
+    "instancePools",
+    "sqlanalytics",
+    "genie",
+    "globalInitScripts",
+    "iamRole",
+    "mlflowExperiment",
+    "featureStore",
+    "RemoteHistoryService",
+    "mlflowAcledArtifact",
+    "databrickssql",
+    "deltaPipelines",
+    "modelRegistry",
+    "repos",
+    "unityCatalog",
+    "gitCredentials",
+    "webTerminal",
+    "serverlessRealTimeInference",
+    "accountsAccessControl",
+    "clusterLibraries",
+    "partnerConnect",
+    "clamAntiVirusReports",
+    "capsule8ContainerSecurityScanningReports",
+  ]
+  type        = list(string)
+  description = "Categoty list log"
+}
+
+variable "log_retention_days" {
+  default     = 14
+  type        = number
+  description = "Retention policy days"
+}
+
+variable "destination_type" {
+  type        = string
+  default     = "Dedicated"
+  description = "Log analytics destination type"
+}
