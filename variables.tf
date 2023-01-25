@@ -85,7 +85,7 @@ variable "access_connector_enabled" {
   description = "Provides an ability to provision Databricks Access Connector which is required for Unity Catalog feature"
   default     = false
 }
-######
+
 variable "log_analytics_workspace" {
   type        = map(string)
   description = "Log Analytics Workspace Name to ID map"
