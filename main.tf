@@ -1,5 +1,9 @@
+locals {
+  suffix = length(var.suffix) == 0 ? "" : "-${var.suffix}" 
+}
+
 resource "azurerm_databricks_workspace" "this" {
-  name                                  = "dbw-${var.project}-${var.env}-${var.location}${var.suffix}"
+  name                                  = "dbw-${var.project}-${var.env}-${var.location}${local.suffix}"
   resource_group_name                   = var.resource_group
   location                              = var.location
   managed_resource_group_name           = "${var.resource_group}-databricks"
@@ -34,7 +38,7 @@ resource "azurerm_databricks_access_connector" "this" {
 resource "azurerm_monitor_diagnostic_setting" "this" {
   for_each = var.sku == "premium" ? { for k, v in var.log_analytics_workspace : k => v } : {}
 
-  name                           = "monitoring-${var.project}-${var.env}-${var.location}"
+  name                           = "monitoring-${var.project}-${var.env}-${var.location}{local.suffix}"
   target_resource_id             = azurerm_databricks_workspace.this.id
   log_analytics_workspace_id     = each.value
   log_analytics_destination_type = var.destination_type
