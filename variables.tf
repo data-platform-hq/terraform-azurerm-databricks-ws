@@ -127,7 +127,7 @@ variable "log_category_list" {
     "capsule8ContainerSecurityScanningReports",
   ]
   type        = list(string)
-  description = "Categoty list log"
+  description = "Category list log"
 }
 
 variable "log_retention_days" {
