@@ -11,7 +11,7 @@ locals {
   tags = {
     environment = "development"
   }
-  log_analytics_map ={ 
+  log_analytics_map = { 
     (data.azurerm_log_analytics_workspace.example.name) = data.azurerm_log_analytics_workspace.example.id 
   }
 }
