@@ -1,5 +1,5 @@
 locals {
-  suffix = length(var.suffix) == 0 ? "" : "-${var.suffix}" 
+  suffix = length(var.suffix) == 0 ? "" : "-${var.suffix}"
 }
 
 resource "azurerm_databricks_workspace" "this" {
