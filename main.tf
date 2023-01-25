@@ -32,7 +32,7 @@ resource "azurerm_databricks_access_connector" "this" {
 }
 
 resource "azurerm_monitor_diagnostic_setting" "this" {
-  for_each = length(azurerm_databricks_workspace.this.id) != 0 && length(var.log_analytics_workspace) != 0 ? { for k, v in var.log_analytics_workspace : k => v } : {}
+  for_each = var.sku == "premium" ? { for k, v in var.log_analytics_workspace : k => v } : {}
 
   name                           = "monitoring-${var.project}-${var.env}-${var.location}"
   target_resource_id             = azurerm_databricks_workspace.this.id
@@ -50,6 +50,4 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
       }
     }
   }
-
-  depends_on = [azurerm_databricks_workspace.this]
 }
