@@ -93,6 +93,8 @@ variable "log_analytics_workspace" {
 }
 
 variable "log_category_list" {
+  type        = list(string)
+  description = "Category list log"
   default = [
     "dbfs",
     "clusters",
@@ -105,16 +107,12 @@ variable "log_category_list" {
     "sqlPermissions",
     "instancePools",
     "sqlanalytics",
-    "genie",
     "globalInitScripts",
-    "iamRole",
     "mlflowExperiment",
     "featureStore",
     "RemoteHistoryService",
-    "mlflowAcledArtifact",
     "databrickssql",
     "deltaPipelines",
-    "modelRegistry",
     "repos",
     "unityCatalog",
     "gitCredentials",
@@ -122,12 +120,7 @@ variable "log_category_list" {
     "serverlessRealTimeInference",
     "accountsAccessControl",
     "clusterLibraries",
-    "partnerConnect",
-    "clamAntiVirusReports",
-    "capsule8ContainerSecurityScanningReports",
   ]
-  type        = list(string)
-  description = "Category list log"
 }
 
 variable "log_retention_days" {
