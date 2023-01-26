@@ -5,11 +5,20 @@ Terraform module for creation Azure Databricks Workspace
 This module provides an ability to deploy Azure Databricks Workspace. Here is an example how to provision Azure Databricks Workspace in managed network with Databricks Access Connector
 
 In this case, it is recommended to also provision prerequisite resources with [Resource Group](https://registry.terraform.io/modules/data-platform-hq/function-app-linux/azurerm/latest), [Network](https://registry.terraform.io/modules/data-platform-hq/network/azurerm/latest) and [Subnet](https://registry.terraform.io/modules/data-platform-hq/subnet/azurerm/latest) modules, otherwise provide required resources from your own sources. 
-```
+
+```hcl
 locals {
   tags = {
     environment = "development"
   }
+  log_analytics_map = { 
+    (data.azurerm_log_analytics_workspace.example.name) = data.azurerm_log_analytics_workspace.example.id 
+  }
+}
+
+data "azurerm_log_analytics_workspace" "example" {
+  name                = "example-law"
+  resource_group_name = "example-rg"
 }
 
 module "databricks-ws" {
@@ -18,16 +27,17 @@ module "databricks-ws" {
   project                           = "datahq"
   env                               = "dev"
   location                          = "eastus"
-  suffix                            = "-example"
+  suffix                            = "example"
   tags                              = local.tags
   sku                               = "premium"
-  resource_group                    = module.resource_group.name 
+  resource_group                    = "example-rg"
   network_id                        = module.network.id
   public_subnet_name                = module.subnet_public.name
   private_subnet_name               = module.subnet_private.name
   public_subnet_nsg_association_id  = module.subnet_public.nsg_association_id
   private_subnet_nsg_association_id = module.subnet_private.nsg_association_id
   access_connector_enabled          = true
+  log_analytics_workspace           = local.log_analytics_map
 }
 ```
 
@@ -37,13 +47,13 @@ module "databricks-ws" {
 | Name                                                                      | Version   |
 | ------------------------------------------------------------------------- | --------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0  |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm)       | >= 3.23.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm)       | >= 3.40.0 |
 
 ## Providers
 
 | Name                                                          | Version |
 | ------------------------------------------------------------- | ------- |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.24.0  |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.40.0  |
 
 ## Modules
 
@@ -55,6 +65,7 @@ No modules.
 |---------------------------------------------------------------------------------------------------------------------------------------------------------| -------- |
 | [azurerm_databricks_workspace.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_workspace)               | resource |
 | [azurerm_databricks_access_connector.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_access_connector) | resource |
+| [azurerm_monitor_diagnostic_setting.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting)   | resource |
 
 ## Inputs
 
@@ -76,6 +87,10 @@ No modules.
 | <a name="input_no_public_ip"></a> [no\_public\_ip](#input\_no\_public\_ip)                                                                    | Are public IP Addresses not allowed?: <pre>[true \ false] </pre>                                                                                                               | `bool`        | true     |    no    |
 | <a name="input_nsg_rules_required"></a> [nsg\_rules\_required](#input\_nsg\_rules\_required)                                                  | Does the data plane to control plane communication happen over private link endpoint only or publicly?: <pre>[AllRules \ NoAzureDatabricksRules \ NoAzureServiceRules] </pre>  | `string`      | AllRules |    no    |
 | <a name="input_access_connector_enabled"></a> [access\_connector\_enabled](#input\_access\_connector\_enabled)                                | Provides an ability to provision Databricks Access Connector which is required for Unity Catalog feature                                                                       | `bool`        | false    |    no    |
+| <a name="input_log_analytics_workspace"></a> [log\_analytics\_workspace](#input\_log\_analytics\_workspace)| Log Analytics Workspace Name to ID map | `map(string)` | {} | no |
+| <a name="input_log_category_list"></a> [log\_category\_list](#input\_log\_category\_list)| Category list log | `list(string)` |  <pre>[<br>  "dbfs",<br>  "clusters",<br>  "accounts",<br>  "jobs",<br>  "notebook",<br>  "ssh"<br>  "workspace",<br>  "secrets",<br>  "sqlPermissions",<br>  "instancePools".<br>  "sqlanalytics",<br>  "globalInitScripts",<br>  "featureStore",<br>  "RemoteHistoryService",<br>  "databrickssql",<br>  "deltaPipelines",<br>  "repos",<br>  "unityCatalog",<br>  "gitCredentials",<br>  "webTerminal",<br>  "serverlessRealTimeInference",<br>  "accountsAccessControl",<br>  "clusterLibraries",<br>]</pre> | no |
+| <a name="input_log_retention_days"></a> [log\_retention\_days](#input\_log\_retention\_days)| Retention policy days | `number` | 7 | no |
+| <a name="input_destination_type"></a> [destination\_type](#input\_destination\_type)| Log analytics destination type | `string` | "Dedicated" | no |
 
 ## Outputs
 
