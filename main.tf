@@ -36,21 +36,21 @@ resource "azurerm_databricks_access_connector" "this" {
 }
 
 data "azurerm_monitor_diagnostic_categories" "this" {
-  for_each = var.sku == "premium" ? { for k, v in var.log_analytics_workspace : k => v } : {}
+  for_each = var.sku == "premium" ? var.log_analytics_workspace : {}
 
   resource_id = azurerm_databricks_workspace.this.id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "this" {
-  for_each = var.sku == "premium" ? { for k, v in var.log_analytics_workspace : k => v } : {}
+  for_each = var.sku == "premium" ? var.log_analytics_workspace : {}
 
-  name                           = "monitoring-${var.project}-${var.env}-${var.location}{local.suffix}"
+  name                           = "monitoring-${var.project}-${var.env}-${var.location}${local.suffix}"
   target_resource_id             = azurerm_databricks_workspace.this.id
   log_analytics_workspace_id     = each.value
   log_analytics_destination_type = var.analytics_destination_type
 
   dynamic "enabled_log" {
-    for_each = data.azurerm_monitor_diagnostic_categories.this[0].log_category_types
+    for_each = data.azurerm_monitor_diagnostic_categories.this[each.key].log_category_types
     content {
       category = enabled_log.value
 
@@ -60,6 +60,7 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
       }
     }
   }
+
   lifecycle {
     ignore_changes = [log_analytics_destination_type] # TODO remove when issue is fixed: https://github.com/Azure/azure-rest-api-specs/issues/9281
   }
