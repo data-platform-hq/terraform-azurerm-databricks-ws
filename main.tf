@@ -37,7 +37,7 @@ resource "azurerm_databricks_access_connector" "this" {
 
 data "azurerm_monitor_diagnostic_categories" "this" {
   for_each = var.sku == "premium" ? { for k, v in var.log_analytics_workspace : k => v } : {}
-  
+
   resource_id = azurerm_databricks_workspace.this.id
 }
 
