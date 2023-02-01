@@ -92,44 +92,13 @@ variable "log_analytics_workspace" {
   default     = {}
 }
 
-variable "log_category_list" {
-  type        = list(string)
-  description = "Category list log"
-  default = [
-    "dbfs",
-    "clusters",
-    "accounts",
-    "jobs",
-    "notebook",
-    "ssh",
-    "workspace",
-    "secrets",
-    "sqlPermissions",
-    "instancePools",
-    "sqlanalytics",
-    "globalInitScripts",
-    "mlflowExperiment",
-    "featureStore",
-    "RemoteHistoryService",
-    "databrickssql",
-    "deltaPipelines",
-    "repos",
-    "unityCatalog",
-    "gitCredentials",
-    "webTerminal",
-    "serverlessRealTimeInference",
-    "accountsAccessControl",
-    "clusterLibraries",
-  ]
-}
-
 variable "log_retention_days" {
-  default     = 7
+  default     = 0
   type        = number
   description = "Retention policy days"
 }
 
-variable "destination_type" {
+variable "analytics_destination_type" {
   type        = string
   default     = "Dedicated"
   description = "Log analytics destination type"
