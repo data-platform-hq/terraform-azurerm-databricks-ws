@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.2.1...v1.2.2) (2023-02-02)
+
+
+### Bug Fixes
+
+* removed logs retention parameter ([ee50ff5](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/ee50ff5960a4a4582b3df11be4823075f879b32a))
+
 ## [1.2.1](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.2.0...v1.2.1) (2023-02-02)
 
 
