@@ -53,11 +53,6 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
     for_each = data.azurerm_monitor_diagnostic_categories.this[each.key].log_category_types
     content {
       category = enabled_log.value
-
-      retention_policy {
-        enabled = true
-        days    = var.log_retention_days
-      }
     }
   }
 

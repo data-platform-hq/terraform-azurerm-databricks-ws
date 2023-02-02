@@ -92,12 +92,6 @@ variable "log_analytics_workspace" {
   default     = {}
 }
 
-variable "log_retention_days" {
-  default     = 0
-  type        = number
-  description = "Retention policy days"
-}
-
 variable "analytics_destination_type" {
   type        = string
   default     = "Dedicated"
