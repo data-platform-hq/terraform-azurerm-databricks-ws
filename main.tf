@@ -25,7 +25,7 @@ resource "azurerm_databricks_workspace" "this" {
 resource "azurerm_databricks_access_connector" "this" {
   count = var.access_connector_enabled ? 1 : 0
 
-  name                = "ac-${var.project}-${var.env}-${var.location}${var.suffix}"
+  name                = "ac-${var.project}-${var.env}-${var.location}${local.suffix}"
   resource_group_name = var.resource_group
   location            = var.location
   tags                = var.tags
