@@ -1,3 +1,13 @@
+## [1.2.1](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.2.0...v1.2.1) (2023-02-02)
+
+
+### Bug Fixes
+
+* changed for_each  condition ([0869687](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/08696872b2acc933e18db808b8dd13f7ac355732))
+* chenged diagnostic check ([42c29ea](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/42c29ea82ae9016195004a24e42a9f06174689f2))
+* chenged suffix to local.suffix ([e2d011f](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/e2d011f4101cd87cee9218b6b2d2f2d2937fe7fa))
+* terraform fmt ([15726ca](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/15726ca103ef1885eb07500a7529adb8659ca990))
+
 # [1.2.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.1.0...v1.2.0) (2023-01-26)
 
 
