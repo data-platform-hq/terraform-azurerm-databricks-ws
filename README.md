@@ -89,7 +89,7 @@ No modules.
 | <a name="input_nsg_rules_required"></a> [nsg\_rules\_required](#input\_nsg\_rules\_required)                                                  | Does the data plane to control plane communication happen over private link endpoint only or publicly?: <pre>[AllRules \ NoAzureDatabricksRules \ NoAzureServiceRules] </pre>  | `string`      | AllRules |    no    |
 | <a name="input_access_connector_enabled"></a> [access\_connector\_enabled](#input\_access\_connector\_enabled)                                | Provides an ability to provision Databricks Access Connector which is required for Unity Catalog feature                                                                       | `bool`        | false    |    no    |
 | <a name="input_log_analytics_workspace"></a> [log\_analytics\_workspace](#input\_log\_analytics\_workspace)| Log Analytics Workspace Name to ID map | `map(string)` | {} | no |
-| <a name="input_log_retention_days"></a> [log\_retention\_days](#input\_log\_retention\_days)| Retention policy days | `number` | 0 | no |
+| <a name="input_log_retention_days"></a> [log\_retention\_days](#input\_log\_retention\_days)| Retention policy days. Setting this to 0 will retain the events indefinitely | `number` | 0 | no |
 | <a name="input_analytics_destination_type"></a> [analytics\_destination\_type](#input\_analytics\_destination\_type)| Log analytics destination type | `string` | "Dedicated" | no |
 
 ## Outputs
