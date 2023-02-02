@@ -25,7 +25,7 @@ resource "azurerm_databricks_workspace" "this" {
 resource "azurerm_databricks_access_connector" "this" {
   count = var.access_connector_enabled ? 1 : 0
 
-  name                = "ac-${var.project}-${var.env}-${var.location}${var.suffix}"
+  name                = "ac-${var.project}-${var.env}-${var.location}${local.suffix}"
   resource_group_name = var.resource_group
   location            = var.location
   tags                = var.tags
@@ -35,16 +35,22 @@ resource "azurerm_databricks_access_connector" "this" {
   }
 }
 
-resource "azurerm_monitor_diagnostic_setting" "this" {
-  for_each = var.sku == "premium" ? { for k, v in var.log_analytics_workspace : k => v } : {}
+data "azurerm_monitor_diagnostic_categories" "this" {
+  for_each = var.sku == "premium" ? var.log_analytics_workspace : {}
 
-  name                           = "monitoring-${var.project}-${var.env}-${var.location}{local.suffix}"
+  resource_id = azurerm_databricks_workspace.this.id
+}
+
+resource "azurerm_monitor_diagnostic_setting" "this" {
+  for_each = var.sku == "premium" ? var.log_analytics_workspace : {}
+
+  name                           = "monitoring-${var.project}-${var.env}-${var.location}${local.suffix}"
   target_resource_id             = azurerm_databricks_workspace.this.id
   log_analytics_workspace_id     = each.value
-  log_analytics_destination_type = var.destination_type
+  log_analytics_destination_type = var.analytics_destination_type
 
   dynamic "enabled_log" {
-    for_each = var.log_category_list
+    for_each = data.azurerm_monitor_diagnostic_categories.this[each.key].log_category_types
     content {
       category = enabled_log.value
 
@@ -53,5 +59,9 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
         days    = var.log_retention_days
       }
     }
+  }
+
+  lifecycle {
+    ignore_changes = [log_analytics_destination_type] # TODO remove when issue is fixed: https://github.com/Azure/azure-rest-api-specs/issues/9281
   }
 }

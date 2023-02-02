@@ -65,6 +65,7 @@ No modules.
 |---------------------------------------------------------------------------------------------------------------------------------------------------------| -------- |
 | [azurerm_databricks_workspace.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_workspace)               | resource |
 | [azurerm_databricks_access_connector.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_access_connector) | resource |
+| [data.azurerm_monitor_diagnostic_categories.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/monitor_diagnostic_categories) | resource |
 | [azurerm_monitor_diagnostic_setting.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting)   | resource |
 
 ## Inputs
@@ -88,9 +89,8 @@ No modules.
 | <a name="input_nsg_rules_required"></a> [nsg\_rules\_required](#input\_nsg\_rules\_required)                                                  | Does the data plane to control plane communication happen over private link endpoint only or publicly?: <pre>[AllRules \ NoAzureDatabricksRules \ NoAzureServiceRules] </pre>  | `string`      | AllRules |    no    |
 | <a name="input_access_connector_enabled"></a> [access\_connector\_enabled](#input\_access\_connector\_enabled)                                | Provides an ability to provision Databricks Access Connector which is required for Unity Catalog feature                                                                       | `bool`        | false    |    no    |
 | <a name="input_log_analytics_workspace"></a> [log\_analytics\_workspace](#input\_log\_analytics\_workspace)| Log Analytics Workspace Name to ID map | `map(string)` | {} | no |
-| <a name="input_log_category_list"></a> [log\_category\_list](#input\_log\_category\_list)| Category list log | `list(string)` |  <pre>[<br>  "dbfs",<br>  "clusters",<br>  "accounts",<br>  "jobs",<br>  "notebook",<br>  "ssh"<br>  "workspace",<br>  "secrets",<br>  "sqlPermissions",<br>  "instancePools".<br>  "sqlanalytics",<br>  "globalInitScripts",<br>  "featureStore",<br>  "RemoteHistoryService",<br>  "databrickssql",<br>  "deltaPipelines",<br>  "repos",<br>  "unityCatalog",<br>  "gitCredentials",<br>  "webTerminal",<br>  "serverlessRealTimeInference",<br>  "accountsAccessControl",<br>  "clusterLibraries",<br>]</pre> | no |
-| <a name="input_log_retention_days"></a> [log\_retention\_days](#input\_log\_retention\_days)| Retention policy days | `number` | 7 | no |
-| <a name="input_destination_type"></a> [destination\_type](#input\_destination\_type)| Log analytics destination type | `string` | "Dedicated" | no |
+| <a name="input_log_retention_days"></a> [log\_retention\_days](#input\_log\_retention\_days)| Retention policy days. Setting this to 0 will retain the events indefinitely | `number` | 0 | no |
+| <a name="input_analytics_destination_type"></a> [analytics\_destination\_type](#input\_analytics\_destination\_type)| Log analytics destination type | `string` | "Dedicated" | no |
 
 ## Outputs
 
