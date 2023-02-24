@@ -13,7 +13,7 @@ resource "azurerm_databricks_workspace" "this" {
   public_network_access_enabled         = var.public_network_access_enabled
   network_security_group_rules_required = var.nsg_rules_required
   tags                                  = var.tags
-  managed_services_cmk_key_vault_key_id = var.customer_managed_key_enabled ? azurerm_key_vault_key.databricks_ws_service[0].id : null
+  managed_services_cmk_key_vault_key_id = var.customer_managed_service_key_enabled ? azurerm_key_vault_key.databricks_ws_service[0].id : null
   custom_parameters {
     no_public_ip                                         = var.no_public_ip
     virtual_network_id                                   = var.network_id
