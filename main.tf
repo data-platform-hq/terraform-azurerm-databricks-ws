@@ -67,7 +67,7 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
 resource "azurerm_key_vault_key" "databricks_ws_service" {
   count = var.customer_managed_service_key_enabled ? 1 : 0
 
-  name         = "managed_services"
+  name         = "databricks-ws-service"
   key_vault_id = var.key_vault_id
   key_type     = "RSA"
   key_size     = 2048
