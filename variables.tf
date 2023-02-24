@@ -97,3 +97,21 @@ variable "analytics_destination_type" {
   default     = "Dedicated"
   description = "Log analytics destination type"
 }
+
+variable "key_vault_id" {
+  type        = string
+  description = "Key Vault ID"
+  default     = ""
+}
+
+variable "customer_managed_service_key_enabled" {
+  type        = bool
+  description = "Enable encryption managed services for databricks"
+  default     = true
+}
+
+variable "global_databricks_object_id" {
+  type        = string
+  description = "Global 'AzureDatabricks' SP object id"
+  default     = "9b38785a-6e08-4087-a0c4-20634343f21f"
+}

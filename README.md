@@ -63,10 +63,13 @@ No modules.
 
 | Name                                                                                                                                                    | Type     |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------| -------- |
+| [data.azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config)   | data |
 | [azurerm_databricks_workspace.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_workspace)               | resource |
 | [azurerm_databricks_access_connector.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_access_connector) | resource |
 | [data.azurerm_monitor_diagnostic_categories.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/monitor_diagnostic_categories) | resource |
 | [azurerm_monitor_diagnostic_setting.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting)   | resource |
+| [azurerm_key_vault_key.databricks_ws_service](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_key)   | resource |
+| [azurerm_key_vault_access_policy.databricks-ws_service](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_access_policy)   | resource |
 
 ## Inputs
 
@@ -90,7 +93,9 @@ No modules.
 | <a name="input_access_connector_enabled"></a> [access\_connector\_enabled](#input\_access\_connector\_enabled)                                | Provides an ability to provision Databricks Access Connector which is required for Unity Catalog feature                                                                       | `bool`        | false    |    no    |
 | <a name="input_log_analytics_workspace"></a> [log\_analytics\_workspace](#input\_log\_analytics\_workspace)| Log Analytics Workspace Name to ID map | `map(string)` | {} | no |
 | <a name="input_analytics_destination_type"></a> [analytics\_destination\_type](#input\_analytics\_destination\_type)| Log analytics destination type | `string` | "Dedicated" | no |
-
+| <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id)| Key Vault ID | `string` | " " | no |
+| <a name="input_customer_managed_service_key_enabled"></a> [customer\_managed\_service\_key\_enabled](#input\_customer\_managed\_service\_key\_enabled)| Enable encryption managed services for databricks | `bool` | true | no |
+| <a name="input_global_databricks_object_id"></a> [global\_databricks\_object\_id](#input\_global\_databricks\_object\_id)| Global 'AzureDatabricks' SP object id | `string` | "9b38785a-6e08-4087-a0c4-20634343f21f" | no |
 ## Outputs
 
 | Name                                                                                                                | Description                                   |
