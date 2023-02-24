@@ -22,7 +22,7 @@ resource "azurerm_databricks_workspace" "this" {
     public_subnet_network_security_group_association_id  = var.public_subnet_nsg_association_id
     private_subnet_network_security_group_association_id = var.private_subnet_nsg_association_id
   }
-  depends_on = [azurerm_key_vault_access_policy.databricks-ws_service]
+  depends_on = [azurerm_key_vault_access_policy.databricks_ws_service]
 }
 
 resource "azurerm_databricks_access_connector" "this" {
@@ -80,10 +80,10 @@ resource "azurerm_key_vault_key" "databricks_ws_service" {
     "verify",
     "wrapKey",
   ]
-  depends_on = [azurerm_key_vault_access_policy.databricks-ws_service]
+  depends_on = [azurerm_key_vault_access_policy.databricks_ws_service]
 }
 
-resource "azurerm_key_vault_access_policy" "databricks-ws_service" {
+resource "azurerm_key_vault_access_policy" "databricks_ws_service" {
   count = var.customer_managed_service_key_enabled ? 1 : 0
 
   key_vault_id = var.key_vault_id
