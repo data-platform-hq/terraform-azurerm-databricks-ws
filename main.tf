@@ -81,14 +81,6 @@ resource "azurerm_key_vault_key" "databricks_ws_service" {
     "verify",
     "wrapKey",
   ]
-
-  lifecycle {
-    precondition {
-      condition     = alltrue([var.customer_managed_service_key_enabled, var.key_vault_id != null])
-      error_message = "To encrypt Databricks Workspace Services, please provide for key_vault_id variable, which points to Key Vault, where CMK key would be created"
-    }
-  }
-
 }
 
 resource "azurerm_key_vault_access_policy" "databricks_ws_service" {
