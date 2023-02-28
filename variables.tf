@@ -97,3 +97,27 @@ variable "analytics_destination_type" {
   default     = "Dedicated"
   description = "Log analytics destination type"
 }
+
+variable "key_vault_id" {
+  type        = string
+  description = "Key Vault ID"
+  default     = null
+}
+
+variable "customer_managed_service_key_enabled" {
+  type        = bool
+  default     = false
+  description = <<-EOT
+  Enabling Service Encryption with Customer Managed Key on already existing Databricks Workspace triggers its replacement. Currently Databricks Terraform Provider wil fail in this case, that's why you have to:
+  1. de-provision all resources created with Databricks Provider, 
+  2. enable Encryption with setting 'customer_managed_service_key_enabled' to true,
+  3. Ensure that Purge protection for key vault is enabled
+  4. provision Databricks Resources with it's Provider (clusters, secret scope, notebook, etc.)
+  EOT
+}
+
+variable "global_databricks_object_id" {
+  type        = string
+  description = "Global 'AzureDatabricks' SP object id"
+  default     = "9b38785a-6e08-4087-a0c4-20634343f21f"
+}
