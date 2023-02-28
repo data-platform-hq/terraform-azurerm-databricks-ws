@@ -1,3 +1,21 @@
+# [1.3.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.2.2...v1.3.0) (2023-02-28)
+
+
+### Bug Fixes
+
+* add precondition ([b07d9cf](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/b07d9cf89c64496e8af9f1b523c7dacc7e48aa22))
+* changed name key vault key ([61a04cb](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/61a04cb66473e7b0899df0f5c77187495898d5fd))
+* changed resource name ([75f4ca5](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/75f4ca5d6da9bc8e8a57c643ea13ec96f7cce79a))
+* changed resource name ([980832e](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/980832ecb34db7927c600cca33497696881c3981))
+* changed varable name ([0ebc4f8](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/0ebc4f8c642251e5afab59117e9413bc6e9729c2))
+* delete precondition form key ([71b6250](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/71b6250133eca6ee5efc99d6e05fc3331807e835))
+* terraform fmt ([bea63c6](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/bea63c63ab77e0fb746b79430506385f2d0436b2))
+
+
+### Features
+
+* create cms for servies ([7137298](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/7137298c46b20e8036447c6c94c4aa2a5556dcf6))
+
 ## [1.2.2](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.2.1...v1.2.2) (2023-02-02)
 
 
