@@ -1,3 +1,16 @@
+# [1.4.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.3.0...v1.4.0) (2023-03-08)
+
+
+### Bug Fixes
+
+* added whitespace before depends_on ([5e3bfc5](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/5e3bfc57f10ba9b5c567fb91421511f795deffdd))
+* fmt ([83250c2](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/83250c2d7ebe2da094211f21904daa3c73b926c4))
+
+
+### Features
+
+* added custom names for resources ([9d1235a](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/9d1235ada0a565b3dbfc57963597c166697d4124))
+
 # [1.3.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.2.2...v1.3.0) (2023-02-28)
 
 
