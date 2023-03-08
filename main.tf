@@ -27,6 +27,7 @@ resource "azurerm_databricks_workspace" "this" {
     public_subnet_network_security_group_association_id  = var.public_subnet_nsg_association_id
     private_subnet_network_security_group_association_id = var.private_subnet_nsg_association_id
   }
+  
   depends_on = [azurerm_key_vault_access_policy.databricks_ws_service]
 }
 
