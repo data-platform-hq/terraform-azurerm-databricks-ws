@@ -1,11 +1,15 @@
 locals {
-  suffix = length(var.suffix) == 0 ? "" : "-${var.suffix}"
+  suffix                    = length(var.suffix) == 0 ? "" : "-${var.suffix}"
+  workspace_name            = var.custom_workspace_name == null ? "dbw-${var.project}-${var.env}-${var.location}${local.suffix}" : "${var.custom_workspace_name}${local.suffix}"
+  access_connector_name     = var.custom_access_connector_name == null ? "ac-${var.project}-${var.env}-${var.location}${local.suffix}" : "${var.custom_access_connector_name}${local.suffix}"
+  diagnostics_name          = var.custom_diagnostics_name == null ? "monitoring-${var.project}-${var.env}-${var.location}${local.suffix}" : "${var.custom_diagnostics_name}${local.suffix}"
+  managed_services_cmk_name = var.custom_cmk_services_name == null ? "databricks-managed-services-cmk" : var.custom_cmk_services_name
 }
 
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_databricks_workspace" "this" {
-  name                                  = "dbw-${var.project}-${var.env}-${var.location}${local.suffix}"
+  name                                  = local.workspace_name
   resource_group_name                   = var.resource_group
   location                              = var.location
   managed_resource_group_name           = "${var.resource_group}-databricks"
@@ -29,7 +33,7 @@ resource "azurerm_databricks_workspace" "this" {
 resource "azurerm_databricks_access_connector" "this" {
   count = var.access_connector_enabled ? 1 : 0
 
-  name                = "ac-${var.project}-${var.env}-${var.location}${local.suffix}"
+  name                = local.access_connector_name
   resource_group_name = var.resource_group
   location            = var.location
   tags                = var.tags
@@ -48,7 +52,7 @@ data "azurerm_monitor_diagnostic_categories" "this" {
 resource "azurerm_monitor_diagnostic_setting" "this" {
   for_each = var.sku == "premium" ? var.log_analytics_workspace : {}
 
-  name                           = "monitoring-${var.project}-${var.env}-${var.location}${local.suffix}"
+  name                           = local.diagnostics_name
   target_resource_id             = azurerm_databricks_workspace.this.id
   log_analytics_workspace_id     = each.value
   log_analytics_destination_type = var.analytics_destination_type
@@ -68,7 +72,7 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
 resource "azurerm_key_vault_key" "databricks_ws_service" {
   count = var.sku == "premium" && var.customer_managed_service_key_enabled ? 1 : 0
 
-  name         = "databricks-managed-services-cmk"
+  name         = local.managed_services_cmk_name
   key_vault_id = var.key_vault_id
   key_type     = "RSA"
   key_size     = 2048
