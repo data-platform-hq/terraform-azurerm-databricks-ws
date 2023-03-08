@@ -44,6 +44,30 @@ variable "private_subnet_nsg_association_id" {
   description = "The resource ID of the azurerm_subnet_network_security_group_association resource which is referred to by the private_subnet_name field. Required if virtual_network_id is set"
 }
 
+variable "custom_workspace_name" {
+  type        = string
+  description = "Specifies the name of the Databricks Workspace resource"
+  default     = null
+}
+
+variable "custom_access_connector_name" {
+  type        = string
+  description = "Specifies the name of the Databricks Access Connector resource"
+  default     = null
+}
+
+variable "custom_diagnostics_name" {
+  type        = string
+  description = "Custom name for Diagnostic Settings that monitors Databricks Workspace"
+  default     = null
+}
+
+variable "custom_cmk_services_name" {
+  type        = string
+  description = "Specifies the name of the Key Vault Key for Databricks Services CMK encryption"
+  default     = null
+}
+
 variable "suffix" {
   type        = string
   description = "Optional suffix that would be added to the end of resources names. It is recommended to use dash at the beginning of variable (e.x., '-example')"
