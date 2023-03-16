@@ -7,37 +7,73 @@ This module provides an ability to deploy Azure Databricks Workspace. Here is an
 In this case, it is recommended to also provision prerequisite resources with [Resource Group](https://registry.terraform.io/modules/data-platform-hq/function-app-linux/azurerm/latest), [Network](https://registry.terraform.io/modules/data-platform-hq/network/azurerm/latest) and [Subnet](https://registry.terraform.io/modules/data-platform-hq/subnet/azurerm/latest) modules, otherwise provide required resources from your own sources. 
 
 ```hcl
-locals {
-  tags = {
-    environment = "development"
-  }
-  log_analytics_map = { 
-    (data.azurerm_log_analytics_workspace.example.name) = data.azurerm_log_analytics_workspace.example.id 
-  }
+data "azurerm_virtual_network" "example" {
+  name                = "example-vnet"
+  resource_group_name = "example-rg"
+  location            = "eastus"
 }
 
-data "azurerm_log_analytics_workspace" "example" {
-  name                = "example-law"
+data "azurerm_subnet" "example" {
+  name                 = "examplesubnet"
+  virtual_network_name = data.azurerm_virtual_network.example.id
+  resource_group_name  = "example-rg"
+}
+
+data "azurerm_network_security_group" "default_nsg" {
+  name                = "example-eastus-sg"
+  resource_group_name = var.default_nsg_rg_name
+}
+
+data "azurerm_key_vault" "example" {
+  name                = "examplekeyvault"
   resource_group_name = "example-rg"
 }
 
-module "databricks-ws" {
-  source  = "data-platform-hq/databricks-ws/azurerm"
+data "azurerm_log_analytics_workspace" "example" {
+  name                = "example"
+  resource_group_name = "example-rg"
+}
 
-  project                           = "datahq"
-  env                               = "dev"
-  location                          = "eastus"
-  suffix                            = "example"
-  tags                              = local.tags
-  sku                               = "premium"
-  resource_group                    = "example-rg"
-  network_id                        = module.network.id
-  public_subnet_name                = module.subnet_public.name
-  private_subnet_name               = module.subnet_private.name
-  public_subnet_nsg_association_id  = module.subnet_public.nsg_association_id
-  private_subnet_nsg_association_id = module.subnet_private.nsg_association_id
-  access_connector_enabled          = true
-  log_analytics_workspace           = local.log_analytics_map
+resource "azurerm_subnet_network_security_group_association" "public" {
+  subnet_id                 = "public_subnet_id"
+  network_security_group_id = data.azurerm_network_security_group.default_nsg.id
+}
+
+resource "azurerm_subnet_network_security_group_association" "private" {
+  subnet_id                 = "private_subnet_id"
+  network_security_group_id = data.azurerm_network_security_group.default_nsg.id
+}
+
+module "databricks_workspace" {
+  source  = "data-platform-hq/databricks-ws/azurerm"
+  version = "1.4.0"
+
+  project        = "datahq"
+  env            = "example"
+  location       = "eastus"
+  sku            = "premium"
+  resource_group = "example_rg"
+
+  # Custom resources names
+  custom_workspace_name        = "dbw-example"
+  custom_access_connector_name = "example_databricks_connector"
+  custom_diagnostics_name      = "example_databricks_diagnostics"
+  custom_cmk_services_name     = "example-databricks-services-cmk"
+
+  # Vnet injection block
+  network_id                        = data.azurerm_virtual_network.example.id
+  private_subnet_name               = data.azurerm_subnet.private.name
+  public_subnet_nsg_association_id  = azurerm_subnet_network_security_group_association.public.id
+  private_subnet_nsg_association_id = azurerm_subnet_network_security_group_association.private.id
+  nsg_rules_required                = "NoAzureDatabricksRules"
+
+  # CMK Encryption
+  key_vault_id                         = data.azurerm_key_vault.example.id
+  customer_managed_service_key_enabled = false
+
+  # Other
+  access_connector_enabled = false
+  log_analytics_workspace  = azurerm_log_analytics_workspace.example.name
 }
 ```
 
