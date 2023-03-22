@@ -2,42 +2,108 @@
 Terraform module for creation Azure Databricks Workspace
 
 ## Usage
-This module provides an ability to deploy Azure Databricks Workspace. Here is an example how to provision Azure Databricks Workspace in managed network with Databricks Access Connector
+This module provides an ability to deploy Azure Databricks Workspace. Here is an example how to provision Azure Databricks Workspace in managed network.
 
-In this case, it is recommended to also provision prerequisite resources with [Resource Group](https://registry.terraform.io/modules/data-platform-hq/function-app-linux/azurerm/latest), [Network](https://registry.terraform.io/modules/data-platform-hq/network/azurerm/latest) and [Subnet](https://registry.terraform.io/modules/data-platform-hq/subnet/azurerm/latest) modules, otherwise provide required resources from your own sources. 
+Currently, it is only possible to provision Databricks Workspace in managed network with help of this module.
 
 ```hcl
-locals {
-  tags = {
-    environment = "development"
-  }
-  log_analytics_map = { 
-    (data.azurerm_log_analytics_workspace.example.name) = data.azurerm_log_analytics_workspace.example.id 
-  }
+# Prerequisite resources for Databricks Workspace Deployment
+data "azurerm_virtual_network" "example" {
+  name                = "example-vnet"
+  resource_group_name = "example-rg"
+  location            = "eastus"
 }
 
-data "azurerm_log_analytics_workspace" "example" {
-  name                = "example-law"
+data "azurerm_network_security_group" "default_nsg" {
+  name                = "example-eastus-sg"
   resource_group_name = "example-rg"
 }
 
-module "databricks-ws" {
+data "azurerm_key_vault" "example" {
+  name                = "example-key-vault"
+  resource_group_name = "example-rg"
+}
+
+data "azurerm_log_analytics_workspace" "example" {
+  name                = "example"
+  resource_group_name = "example-rg"
+}
+
+module "databricks_public" {
+  source  = "data-platform-hq/subnet/azurerm"
+
+  name                = "databricks-public"
+  resource_group_name = "example-rg"
+  network             = data.azurerm_virtual_network.example.name
+  cidr                = "10.1.0.0/22"
+  nsg_id              = data.azurerm_network_security_group.default_nsg.id
+
+  delegations = [{
+    name = "Microsoft.Databricks/workspaces"
+    actions = [
+      "Microsoft.Network/virtualNetworks/subnets/join/action",
+      "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
+      "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"
+    ]
+  }]
+}
+
+module "databricks_private" {
+  source  = "data-platform-hq/subnet/azurerm"
+
+  name                = "databricks-private"
+  resource_group_name = "example-rg"
+  network             = data.azurerm_virtual_network.example.name
+  cidr                = "10.1.4.0/22"
+  nsg_id              = data.azurerm_network_security_group.default_nsg.id
+
+  delegations = [{
+    name = "Microsoft.Databricks/workspaces"
+    actions = [
+      "Microsoft.Network/virtualNetworks/subnets/join/action",
+      "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
+      "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"
+    ]
+  }]
+}
+
+locals {
+  log_analytics_workspace_map  = { 
+    (data.azurerm_log_analytics_workspace.example.name) = data.azurerm_log_analytics_workspace.example.id
+  }
+}
+
+# Databricks Workspace module usage with prerequisite resources mentioned above
+module "databricks_workspace" {
   source  = "data-platform-hq/databricks-ws/azurerm"
 
-  project                           = "datahq"
-  env                               = "dev"
-  location                          = "eastus"
-  suffix                            = "example"
-  tags                              = local.tags
-  sku                               = "premium"
-  resource_group                    = "example-rg"
-  network_id                        = module.network.id
-  public_subnet_name                = module.subnet_public.name
-  private_subnet_name               = module.subnet_private.name
-  public_subnet_nsg_association_id  = module.subnet_public.nsg_association_id
-  private_subnet_nsg_association_id = module.subnet_private.nsg_association_id
-  access_connector_enabled          = true
-  log_analytics_workspace           = local.log_analytics_map
+  project        = "datahq"
+  env            = "example"
+  location       = "eastus"
+  sku            = "premium"
+  resource_group = "example-rg"
+
+  # Custom resources names
+  custom_workspace_name        = "dbw-example-workspace"
+  custom_access_connector_name = "example-databricks-connector"
+  custom_diagnostics_name      = "example-databricks-diagnostics"
+  custom_cmk_services_name     = "example-databricks-services-cmk"
+
+  # Vnet injection block
+  network_id                        = data.azurerm_virtual_network.example.id
+  public_subnet_name                = module.databricks_public.name
+  private_subnet_name               = module.databricks_private.name
+  public_subnet_nsg_association_id  = module.databricks_public.nsg_association_id
+  private_subnet_nsg_association_id = module.databricks_private.nsg_association_id
+  nsg_rules_required                = "AllRules"
+
+  # CMK Encryption
+  key_vault_id                         = data.azurerm_key_vault.example.id
+  customer_managed_service_key_enabled = false
+
+  # Other
+  access_connector_enabled = false
+  log_analytics_workspace  = local.log_analytics_workspace_map
 }
 ```
 
