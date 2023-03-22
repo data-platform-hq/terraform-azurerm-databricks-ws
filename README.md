@@ -7,6 +7,7 @@ This module provides an ability to deploy Azure Databricks Workspace. Here is an
 Currently, it is only possible to provision Databricks Workspace in managed network with help of this module.
 
 ```hcl
+# Prerequisite resources for Databricks Workspace Deployment
 data "azurerm_virtual_network" "example" {
   name                = "example-vnet"
   resource_group_name = "example-rg"
@@ -72,6 +73,7 @@ locals {
   }
 }
 
+# Databricks Workspace module usage with prerequisite resources mentioned above
 module "databricks_workspace" {
   source  = "data-platform-hq/databricks-ws/azurerm"
 
