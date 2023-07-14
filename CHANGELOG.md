@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.4.0...v1.5.0) (2023-07-14)
+
+
+### Bug Fixes
+
+* updated module usage code example ([be142d1](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/be142d1c82ef1f6a3c818ea646ec15ace0bacf51))
+
+
+### Features
+
+* separated cmk key creation ([8fe8019](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/8fe80196fe8796c31b71ac7ef14d7076299ae196))
+
 # [1.4.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.3.0...v1.4.0) (2023-03-08)
 
 
