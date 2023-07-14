@@ -17,7 +17,7 @@ resource "azurerm_databricks_workspace" "this" {
   public_network_access_enabled         = var.public_network_access_enabled
   network_security_group_rules_required = var.nsg_rules_required
   tags                                  = var.tags
-  managed_services_cmk_key_vault_key_id = var.sku == "premium" && var.customer_managed_service_key_enabled ? azurerm_key_vault_key.databricks_ws_service[0].id : null
+  managed_services_cmk_key_vault_key_id = var.sku == "premium" && var.customer_managed_service_key_enabled ? element(values(var.key_vault_key_map), 0) : null
 
   custom_parameters {
     no_public_ip                                         = var.no_public_ip
@@ -70,38 +70,13 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
   }
 }
 
-resource "azurerm_key_vault_key" "databricks_ws_service" {
-  count = var.sku == "premium" && var.customer_managed_service_key_enabled ? 1 : 0
-
-  name         = local.managed_services_cmk_name
-  key_vault_id = var.key_vault_id
-  key_type     = "RSA"
-  key_size     = 2048
-
-  key_opts = [
-    "decrypt",
-    "encrypt",
-    "sign",
-    "unwrapKey",
-    "verify",
-    "wrapKey",
-  ]
-}
-
 resource "azurerm_key_vault_access_policy" "databricks_ws_service" {
   count = var.sku == "premium" && var.customer_managed_service_key_enabled ? 1 : 0
 
   key_vault_id = var.key_vault_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   object_id    = var.global_databricks_object_id
-  key_permissions = [
-    "Get",
-    "List",
-    "Encrypt",
-    "Decrypt",
-    "WrapKey",
-    "UnwrapKey"
-  ]
+  key_permissions = var.key_permissions
 
   lifecycle {
     precondition {

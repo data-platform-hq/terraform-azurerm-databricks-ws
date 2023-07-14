@@ -128,6 +128,21 @@ variable "key_vault_id" {
   default     = null
 }
 
+variable "key_permissions" {
+  type        = list(string)
+  description = "List of key vault key permissions"
+  default = [
+    "Get",
+    "List",
+    "Encrypt",
+    "Decrypt",
+    "WrapKey",
+    "UnwrapKey",
+    "GetRotationPolicy",
+    "SetRotationPolicy",
+  ]
+}
+
 variable "customer_managed_service_key_enabled" {
   type        = bool
   default     = false
@@ -138,6 +153,12 @@ variable "customer_managed_service_key_enabled" {
   3. Ensure that Purge protection for key vault is enabled
   4. provision Databricks Resources with it's Provider (clusters, secret scope, notebook, etc.)
   EOT
+}
+
+variable "key_vault_key_map" {
+  type        = map(string)
+  description = "A map of Key Vault key names to Key Vault key IDs"
+  default     = {}
 }
 
 variable "global_databricks_object_id" {
