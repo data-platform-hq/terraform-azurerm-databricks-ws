@@ -63,6 +63,10 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
       category = enabled_log.value
     }
   }
+
+  lifecycle {
+    ignore_changes = [log_analytics_destination_type] # TODO remove when issue is fixed: https://github.com/Azure/azure-rest-api-specs/issues/9281
+  }
 }
 
 resource "azurerm_key_vault_access_policy" "databricks_ws_service" {
