@@ -1,9 +1,8 @@
 locals {
-  suffix                    = length(var.suffix) == 0 ? "" : "-${var.suffix}"
-  workspace_name            = var.custom_workspace_name == null ? "dbw-${var.project}-${var.env}-${var.location}${local.suffix}" : "${var.custom_workspace_name}${local.suffix}"
-  access_connector_name     = var.custom_access_connector_name == null ? "ac-${var.project}-${var.env}-${var.location}${local.suffix}" : "${var.custom_access_connector_name}${local.suffix}"
-  diagnostics_name          = var.custom_diagnostics_name == null ? "monitoring-${var.project}-${var.env}-${var.location}${local.suffix}" : "${var.custom_diagnostics_name}${local.suffix}"
-  managed_services_cmk_name = var.custom_cmk_services_name == null ? "databricks-managed-services-cmk" : var.custom_cmk_services_name
+  suffix                = length(var.suffix) == 0 ? "" : "-${var.suffix}"
+  workspace_name        = var.custom_workspace_name == null ? "dbw-${var.project}-${var.env}-${var.location}${local.suffix}" : "${var.custom_workspace_name}${local.suffix}"
+  access_connector_name = var.custom_access_connector_name == null ? "ac-${var.project}-${var.env}-${var.location}${local.suffix}" : "${var.custom_access_connector_name}${local.suffix}"
+  diagnostics_name      = var.custom_diagnostics_name == null ? "monitoring-${var.project}-${var.env}-${var.location}${local.suffix}" : "${var.custom_diagnostics_name}${local.suffix}"
 }
 
 data "azurerm_client_config" "current" {}
@@ -17,7 +16,7 @@ resource "azurerm_databricks_workspace" "this" {
   public_network_access_enabled         = var.public_network_access_enabled
   network_security_group_rules_required = var.nsg_rules_required
   tags                                  = var.tags
-  managed_services_cmk_key_vault_key_id = var.sku == "premium" && var.customer_managed_service_key_enabled ? element(values(var.key_vault_key_map), 0) : null
+  managed_services_cmk_key_vault_key_id = alltrue([var.sku == "premium", var.customer_managed_service_key_enabled]) ? var.key_vault_key_id : null
 
   custom_parameters {
     no_public_ip                                         = var.no_public_ip
@@ -64,23 +63,20 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
       category = enabled_log.value
     }
   }
-
-  lifecycle {
-    ignore_changes = [log_analytics_destination_type] # TODO remove when issue is fixed: https://github.com/Azure/azure-rest-api-specs/issues/9281
-  }
 }
 
 resource "azurerm_key_vault_access_policy" "databricks_ws_service" {
-  count = var.sku == "premium" && var.customer_managed_service_key_enabled ? 1 : 0
+  count = alltrue([var.sku == "premium", var.customer_managed_service_key_enabled]) ? 1 : 0
 
-  key_vault_id = var.key_vault_id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = var.global_databricks_object_id
-  key_permissions = var.key_permissions
+  key_vault_id       = var.key_vault_id
+  tenant_id          = data.azurerm_client_config.current.tenant_id
+  object_id          = var.global_databricks_object_id
+  key_permissions    = var.key_vault_key_permissions
+  secret_permissions = var.key_vault_secret_permissions
 
   lifecycle {
     precondition {
-      condition     = alltrue([var.customer_managed_service_key_enabled, var.key_vault_id != null])
+      condition     = alltrue([var.customer_managed_service_key_enabled, var.key_vault_id != null, var.key_vault_key_id != null])
       error_message = "To encrypt Databricks Workspace Services, please provide for key_vault_id variable, which points to Key Vault, where CMK key would be created"
     }
   }

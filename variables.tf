@@ -18,7 +18,6 @@ variable "location" {
   description = "Azure location"
 }
 
-
 variable "network_id" {
   type        = string
   description = "The ID of a Virtual Network where this Databricks Cluster should be created"
@@ -59,12 +58,6 @@ variable "custom_access_connector_name" {
 variable "custom_diagnostics_name" {
   type        = string
   description = "Custom name for Diagnostic Settings that monitors Databricks Workspace"
-  default     = null
-}
-
-variable "custom_cmk_services_name" {
-  type        = string
-  description = "Specifies the name of the Key Vault Key for Databricks Services CMK encryption"
   default     = null
 }
 
@@ -122,15 +115,27 @@ variable "analytics_destination_type" {
   description = "Log analytics destination type"
 }
 
+variable "customer_managed_service_key_enabled" {
+  type        = bool
+  default     = false
+  description = "Encrypts Databricks Workspaces Services like Notebooks and Queries, once CMK type of encryption is enabled it won't be possible to switch back to default Microsoft Managed Encryption."
+}
+
 variable "key_vault_id" {
   type        = string
   description = "Key Vault ID"
   default     = null
 }
 
-variable "key_permissions" {
+variable "key_vault_secret_permissions" {
   type        = list(string)
-  description = "List of key vault key permissions"
+  description = "List of key vault secret permissions for Databricks Global Service Principal"
+  default     = ["Get", "List"]
+}
+
+variable "key_vault_key_permissions" {
+  type        = list(string)
+  description = "List of key vault key permissions for Databricks Global Service Principal"
   default = [
     "Get",
     "List",
@@ -143,22 +148,10 @@ variable "key_permissions" {
   ]
 }
 
-variable "customer_managed_service_key_enabled" {
-  type        = bool
-  default     = false
-  description = <<-EOT
-  Enabling Service Encryption with Customer Managed Key on already existing Databricks Workspace triggers its replacement. Currently Databricks Terraform Provider wil fail in this case, that's why you have to:
-  1. de-provision all resources created with Databricks Provider, 
-  2. enable Encryption with setting 'customer_managed_service_key_enabled' to true,
-  3. Ensure that Purge protection for key vault is enabled
-  4. provision Databricks Resources with it's Provider (clusters, secret scope, notebook, etc.)
-  EOT
-}
-
-variable "key_vault_key_map" {
-  type        = map(string)
-  description = "A map of Key Vault key names to Key Vault key IDs"
-  default     = {}
+variable "key_vault_key_id" {
+  type        = string
+  description = "Key Vault key IDs"
+  default     = null
 }
 
 variable "global_databricks_object_id" {
