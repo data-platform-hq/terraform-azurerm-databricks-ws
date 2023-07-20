@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.5.0...v1.6.0) (2023-07-20)
+
+
+### Features
+
+* removed encyrption key creation; update key vault policy ([d87ff46](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/d87ff46682936b8224aa541a7ed981effbfc35a3))
+
 # [1.5.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.4.0...v1.5.0) (2023-07-14)
 
 
