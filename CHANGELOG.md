@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.6.0...v1.6.1) (2023-07-20)
+
+
+### Bug Fixes
+
+* added lifecycle log_analytics_destination_type ([783e468](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/783e468107a55a1aaba067d7e18efe0b7acfbcb5))
+
 # [1.6.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.5.0...v1.6.0) (2023-07-20)
 
 
