@@ -19,11 +19,11 @@ output "sku" {
 }
 
 output "access_connector_id" {
-  value       = var.access_connector_enabled ? azurerm_databricks_access_connector.this[0].id : ""
+  value       = try(azurerm_databricks_access_connector.this[0].id, null)
   description = "Databricks Access Connector's Id"
 }
 
 output "access_connector_identity" {
-  value       = var.access_connector_enabled ? azurerm_databricks_access_connector.this[0].identity[*] : []
+  value       = try(azurerm_databricks_access_connector.this[0].identity[*], null)
   description = "Databricks Access Connector's Identities list"
 }

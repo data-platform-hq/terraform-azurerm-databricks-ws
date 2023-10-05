@@ -1,11 +1,6 @@
-variable "project" {
+variable "workspace_name" {
   type        = string
-  description = "Project name"
-}
-
-variable "env" {
-  type        = string
-  description = "Environment name"
+  description = "Databricks Workspace name"
 }
 
 variable "resource_group" {
@@ -43,30 +38,6 @@ variable "private_subnet_nsg_association_id" {
   description = "The resource ID of the azurerm_subnet_network_security_group_association resource which is referred to by the private_subnet_name field. Required if virtual_network_id is set"
 }
 
-variable "custom_workspace_name" {
-  type        = string
-  description = "Specifies the name of the Databricks Workspace resource"
-  default     = null
-}
-
-variable "custom_access_connector_name" {
-  type        = string
-  description = "Specifies the name of the Databricks Access Connector resource"
-  default     = null
-}
-
-variable "custom_diagnostics_name" {
-  type        = string
-  description = "Custom name for Diagnostic Settings that monitors Databricks Workspace"
-  default     = null
-}
-
-variable "suffix" {
-  type        = string
-  description = "Optional suffix that would be added to the end of resources names. It is recommended to use dash at the beginning of variable (e.x., '-example')"
-  default     = ""
-}
-
 variable "tags" {
   type        = map(string)
   description = "A mapping of tags to assign to the resource"
@@ -76,7 +47,7 @@ variable "tags" {
 variable "sku" {
   type        = string
   description = "The sku to use for the Databricks Workspace: [standard|premium|trial]"
-  default     = "standard"
+  default     = "premium"
 }
 
 variable "public_network_access_enabled" {
@@ -97,10 +68,22 @@ variable "nsg_rules_required" {
   default     = "AllRules"
 }
 
+variable "access_connector_name" {
+  type        = string
+  description = "Databricks Access Connector optional name"
+  default     = null
+}
+
 variable "access_connector_enabled" {
   type        = bool
   description = "Provides an ability to provision Databricks Access Connector which is required for Unity Catalog feature"
-  default     = false
+  default     = true
+}
+
+variable "diagnostics_name" {
+  type        = string
+  description = "Diagnostic Settings optional name"
+  default     = null
 }
 
 variable "log_analytics_workspace" {
@@ -115,12 +98,7 @@ variable "analytics_destination_type" {
   description = "Log analytics destination type"
 }
 
-variable "customer_managed_service_key_enabled" {
-  type        = bool
-  default     = false
-  description = "Encrypts Databricks Workspaces Services like Notebooks and Queries, once CMK type of encryption is enabled it won't be possible to switch back to default Microsoft Managed Encryption."
-}
-
+# Key Vault used for encryption
 variable "key_vault_id" {
   type        = string
   description = "Key Vault ID"
@@ -144,18 +122,50 @@ variable "key_vault_key_permissions" {
     "WrapKey",
     "UnwrapKey",
     "GetRotationPolicy",
-    "SetRotationPolicy",
   ]
-}
-
-variable "key_vault_key_id" {
-  type        = string
-  description = "Key Vault key IDs"
-  default     = null
 }
 
 variable "global_databricks_object_id" {
   type        = string
   description = "Global 'AzureDatabricks' SP object id"
   default     = "9b38785a-6e08-4087-a0c4-20634343f21f"
+}
+
+# Managed Services Encryption
+variable "managed_services_cmk_enabled" {
+  type        = bool
+  default     = false
+  description = "Encrypts Databricks Workspaces Services like Notebooks and Queries, once CMK type of encryption is enabled it won't be possible to switch back to default Microsoft Managed Encryption."
+}
+
+variable "managed_services_cmk_key_vault_key_id" {
+  type        = string
+  description = "Key Vault key ID used for Databricks Managed Services encryption"
+  default     = null
+}
+
+# Managed Disk Encryption
+variable "managed_disk_cmk_enabled" {
+  type        = bool
+  description = "Boolean flag that determines whether Data Plane Disks are encrypted with CMK key"
+  default     = false
+}
+
+variable "managed_disk_cmk_key_vault_key_id" {
+  type        = string
+  description = "Key Vault key ID used for Data Plane Disks encryption"
+  default     = null
+}
+
+# DBFS Encryption
+variable "managed_dbfs_cmk_enabled" {
+  type        = bool
+  description = "Boolean flag that determines whether Workspace DBFS is encrypted with CMK key"
+  default     = false
+}
+
+variable "managed_dbfs_cmk_key_vault_key_id" {
+  type        = string
+  description = "Key Vault key ID used for Databricks DBFS encryption"
+  default     = null
 }
