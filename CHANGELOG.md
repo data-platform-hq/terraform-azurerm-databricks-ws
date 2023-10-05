@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.6.1...v1.7.0) (2023-10-05)
+
+
+### Features
+
+* encryption support; updated naming convention ([9f6c440](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/9f6c4400b76d38a75814796c3e7f37cca26cefa1))
+
 ## [1.6.1](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.6.0...v1.6.1) (2023-07-20)
 
 
