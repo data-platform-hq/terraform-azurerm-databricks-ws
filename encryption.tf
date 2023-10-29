@@ -20,6 +20,23 @@ resource "azurerm_key_vault_access_policy" "databricks_ws_service" {
   }
 }
 
+# Key Vault access policy for Databricks Workspace Storage Account Managed Disk Identity. Used for Disk encryption with CMK
+resource "azurerm_key_vault_access_policy" "databricks_ws_disk" {
+  count = alltrue([var.sku == "premium", var.managed_disk_cmk_enabled, var.managed_disk_cmk_policy_enabled]) ? 1 : 0
+
+  key_vault_id    = var.key_vault_id
+  tenant_id       = azurerm_databricks_workspace.this.managed_disk_identity[0].tenant_id
+  object_id       = azurerm_databricks_workspace.this.managed_disk_identity[0].principal_id
+  key_permissions = var.key_vault_key_permissions
+
+  lifecycle {
+    precondition {
+      condition     = alltrue([var.managed_disk_cmk_enabled, var.key_vault_id != null])
+      error_message = "To encrypt Databricks Workspace Disk, please provide for key_vault_id variable, which points to Key Vault, where CMK key would be created"
+    }
+  }
+}
+
 # Key Vault access policy for Databricks Workspace Storage Account Managed Identity. Used for DBFS encryption with CMK
 resource "azurerm_key_vault_access_policy" "databricks_storage_account_msi" {
   count = alltrue([var.sku == "premium", var.managed_dbfs_cmk_enabled]) ? 1 : 0
