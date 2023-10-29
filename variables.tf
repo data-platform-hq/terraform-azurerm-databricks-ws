@@ -157,11 +157,30 @@ variable "managed_disk_cmk_key_vault_key_id" {
   default     = null
 }
 
+variable "managed_disk_cmk_policy_enabled" {
+  type        = bool
+  description = <<-DOC
+  Create Key Vault Policy for Databricks Workspace Managed Disk identity.
+  Upon initial creation of Workspace with Disk CMK encryption, Disk Encryption Set with managed identity is created, it is used for cluster's disks encryption.
+
+  However, if Workspace already provisioned and have to updated to use Managed Disk encryption, then 'Disk Encryption Set' is known after creation.
+  Which means, that you have to first apply with 'managed_disk_cmk_enabled = true' only and set 'managed_disk_cmk_policy_enabled' to false, because identity is unknown.
+  On next apply, set 'managed_disk_cmk_policy_enabled' to true, because identity of Managed Disk is created and known.
+  DOC
+  default     = true
+}
+
 # DBFS Encryption
 variable "managed_dbfs_cmk_enabled" {
   type        = bool
   description = "Boolean flag that determines whether Workspace DBFS is encrypted with CMK key"
   default     = false
+}
+
+variable "managed_storage_account_identity_enabled" {
+  type        = bool
+  description = "Prerequisite for DBFS encryption. Enabled managed Storage Account identity to create Key Vault Policy to access encryption keys"
+  default     = true
 }
 
 variable "managed_dbfs_cmk_key_vault_key_id" {
