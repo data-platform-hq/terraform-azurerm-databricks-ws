@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.7.0...v1.7.1) (2023-10-29)
+
+
+### Bug Fixes
+
+* readme update; managed disk identity kv policy ([7995a27](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/7995a27ab4c4dcac058904b52dd53f08bf47f0ee))
+
 # [1.7.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.6.1...v1.7.0) (2023-10-05)
 
 
