@@ -27,3 +27,13 @@ output "access_connector_identity" {
   value       = try(azurerm_databricks_access_connector.this[0].identity[*], null)
   description = "Databricks Access Connector's Identities list"
 }
+
+output "databricks_principal_id_identity" {
+  value       = data.azurerm_user_assigned_identity.this.principal_id
+  description = "The Service Principal ID of the User Assigned Identity."
+}
+
+output "databricks_client_id_identity" {
+  value       = data.azurerm_user_assigned_identity.this.client_id
+  description = "The Client ID of the User Assigned Identity."
+}

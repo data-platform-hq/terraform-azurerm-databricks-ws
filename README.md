@@ -141,6 +141,7 @@ No modules.
 | Name                                                                                                                                                                | Type     |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
 | [data.azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config)                              | data     |
+| [data.azurerm_user_assigned_identity.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/user_assigned_identity)               | data     |
 | [azurerm_databricks_workspace.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_workspace)                           | resource |
 | [azurerm_databricks_access_connector.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_access_connector)             | resource |
 | [data.azurerm_monitor_diagnostic_categories.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/monitor_diagnostic_categories) | resource |
@@ -194,6 +195,8 @@ No modules.
 | <a name="output_sku"></a> [sku](#output\_sku)                                                                       | Azure Databricks Workspace SKU type           |
 | <a name="output_access_connector_id"></a> [access\_connector\_id](#output\_access\_connector\_id)                   | Databricks Access Connector's Id              |
 | <a name="output_access_connector_identity"></a> [access\_connector\_identity](#output\_access\_connector\_identity) | Databricks Access Connector's Identities list |
+| <a name="output_databricks_principal_id_identity"></a> [databricks\_principal\_id\_identity](#output\_databricks\_principal\_id\_identity) | The Service Principal ID of the User Assigned Identity. |
+| <a name="output_databricks_client_id_identity"></a> [databricks\_client\_id\_identity](#output\_databricks\_client\_id\_identity) | The Client ID of the User Assigned Identity.                 |
 <!-- END_TF_DOCS -->
 
 ## License
