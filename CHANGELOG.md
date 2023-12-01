@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.7.1...v1.7.2) (2023-12-01)
+
+
+### Bug Fixes
+
+* output identity ([4888f0c](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/4888f0c44a9a9fedd908ca68e0954566f0499f3f))
+
 ## [1.7.1](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.7.0...v1.7.1) (2023-10-29)
 
 
