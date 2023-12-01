@@ -1,5 +1,10 @@
 data "azurerm_client_config" "current" {}
 
+data "azurerm_user_assigned_identity" "this" {
+  name                = "dbmanagedidentity"
+  resource_group_name = azurerm_databricks_workspace.this.managed_resource_group_name
+}
+
 resource "azurerm_databricks_workspace" "this" {
   name                                                = var.workspace_name
   resource_group_name                                 = var.resource_group
