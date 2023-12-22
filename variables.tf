@@ -188,3 +188,9 @@ variable "managed_dbfs_cmk_key_vault_key_id" {
   description = "Key Vault key ID used for Databricks DBFS encryption"
   default     = null
 }
+
+variable "managed_resource_group_name" {
+  type        = string
+  description = "Managed resource group name"
+  default = null
+}
