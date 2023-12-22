@@ -192,5 +192,5 @@ variable "managed_dbfs_cmk_key_vault_key_id" {
 variable "managed_resource_group_name" {
   type        = string
   description = "The name of the managed resource group"
-  default = null
+  default     = null
 }
