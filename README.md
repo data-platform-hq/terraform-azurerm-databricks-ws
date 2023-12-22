@@ -79,10 +79,11 @@ module "databricks_workspace" {
   source  = "data-platform-hq/databricks-ws/azurerm"
   version = "~> 1.0"
 
-  workspace_name = "example-workspace"
-  location       = "eastus"
-  sku            = "premium"
-  resource_group = "example-rg"
+  workspace_name              = "example-workspace"
+  location                    = "eastus"
+  sku                         = "premium"
+  resource_group              = "example-rg"
+  managed_resource_group_name = "example-managed-rg"
 
   # Custom resources names
   access_connector_name = "example-databricks-connector"
@@ -183,6 +184,7 @@ No modules.
 | <a name="input_managed_dbfs_cmk_enabled"></a> [managed\_dbfs\_cmk\_enabled](#input\_managed\_dbfs\_cmk\_enabled)                                                    | Boolean flag that determines whether Workspace DBFS is encrypted with CMK key                                                                                                           | `bool` | false                                                                                                                                                           | no |
 | <a name="input_managed_storage_account_identity_enabled"></a> [managed\_storage\_account\_identity\_enabled](#input\_managed\_storage\_account\_identity\_enabled)  | Prerequisite for DBFS encryption. Enabled managed Storage Account identity to create Key Vault Policy to access encryption keys                                                         | `bool` | true                                                                                                                                                            | no |
 | <a name="input_managed_dbfs_cmk_key_vault_key_id"></a> [managed\_dbfs\_cmk\_key\_vault\_key\_id](#input\_managed\_dbfs\_cmk\_key\_vault\_key\_id)                   | Key Vault key ID used for Databricks DBFS encryption                                                                                                                                    | `string` | null                                                                                                                                                            | no |
+| <a name="input_managed_resource_group_name"></a> [managed\_resource\_group\_name](#input\_resource\_group)                                                                                      | The name of the managed resource group                                                                                                                   | `string`| n/a                                                                                                                                                             |   yes    |
 
 
 ## Outputs
