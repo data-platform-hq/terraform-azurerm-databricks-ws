@@ -50,6 +50,12 @@ variable "sku" {
   default     = "premium"
 }
 
+variable "managed_resource_group_name" {
+  type        = string
+  description = "The name of the managed resource group"
+  default     = null
+}
+
 variable "public_network_access_enabled" {
   type        = bool
   description = "Allow public access for accessing workspace: [true|false]"
@@ -186,11 +192,5 @@ variable "managed_storage_account_identity_enabled" {
 variable "managed_dbfs_cmk_key_vault_key_id" {
   type        = string
   description = "Key Vault key ID used for Databricks DBFS encryption"
-  default     = null
-}
-
-variable "managed_resource_group_name" {
-  type        = string
-  description = "The name of the managed resource group"
   default     = null
 }
