@@ -50,6 +50,12 @@ variable "sku" {
   default     = "premium"
 }
 
+variable "managed_resource_group_name" {
+  type        = string
+  description = "The name of the managed resource group"
+  default     = null
+}
+
 variable "public_network_access_enabled" {
   type        = bool
   description = "Allow public access for accessing workspace: [true|false]"

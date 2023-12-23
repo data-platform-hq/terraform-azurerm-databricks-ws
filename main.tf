@@ -9,7 +9,7 @@ resource "azurerm_databricks_workspace" "this" {
   name                                                = var.workspace_name
   resource_group_name                                 = var.resource_group
   location                                            = var.location
-  managed_resource_group_name                         = "${var.resource_group}-databricks"
+  managed_resource_group_name                         = coalesce(var.managed_resource_group_name, "${var.resource_group}-databricks")
   sku                                                 = var.sku
   public_network_access_enabled                       = var.public_network_access_enabled
   network_security_group_rules_required               = var.nsg_rules_required
