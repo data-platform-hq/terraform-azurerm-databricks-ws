@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.7.2...v1.7.3) (2023-12-23)
+
+
+### Bug Fixes
+
+* the name of the managed resource group is parameterized ([5d16a59](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/5d16a59fbbcdf7415797836174db3ee9040b005f))
+
 ## [1.7.2](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.7.1...v1.7.2) (2023-12-01)
 
 
