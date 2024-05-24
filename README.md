@@ -186,7 +186,7 @@ No modules.
 | <a name="input_public_subnet_nsg_association_id"></a> [public\_subnet\_nsg\_association\_id](#input\_public\_subnet\_nsg\_association\_id) | The resource ID of the azurerm\_subnet\_network\_security\_group\_association resource which is referred to by the public\_subnet\_name field. Required if virtual\_network\_id is set | `string` | n/a | yes |
 | <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group) | The name of the resource group in which to create the storage account | `string` | n/a | yes |
 | <a name="input_sku"></a> [sku](#input\_sku) | The sku to use for the Databricks Workspace: [standard\|premium\|trial] | `string` | `"premium"` | no |
-| <a name="input_storage_firewall_enabled"></a> [storage\_firewall\_enabled](#input\_storage\_firewall\_enabled) | Boolean flag that determines whether public access is disallowed | `bool` | `true` | no |
+| <a name="input_storage_firewall_enabled"></a> [storage\_firewall\_enabled](#input\_storage\_firewall\_enabled) | Boolean flag that determines whether public access is disallowed | `bool` | `false` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the resource | `map(string)` | `{}` | no |
 | <a name="input_workspace_name"></a> [workspace\_name](#input\_workspace\_name) | Databricks Workspace name | `string` | n/a | yes |
 
