@@ -37,3 +37,8 @@ output "databricks_client_id_identity" {
   value       = data.azurerm_user_assigned_identity.this.client_id
   description = "The Client ID of the User Assigned Identity."
 }
+
+output "databricks_managed_storage_account_id" {
+  value       = data.azurerm_storage_account.this.id
+  description = "Azure Databricks Workspace Managed Storage Account ID."
+}
