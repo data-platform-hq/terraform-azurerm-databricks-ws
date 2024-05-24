@@ -1,3 +1,16 @@
+# [1.8.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.7.3...v1.8.0) (2024-05-24)
+
+
+### Bug Fixes
+
+* added security KICS scan action ([59cfce5](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/59cfce5905b002980ab8e9260d90ba72189052fb))
+* replaced pre-commit repo docs creation/update by GH Actions ([f466020](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/f46602046c039c8c951fdfaee56a6023851a374e))
+
+
+### Features
+
+* dbfs firewall ([bfe9036](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/bfe90361d952fedeaa48c21c37f479136274dc8a))
+
 ## [1.7.3](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.7.2...v1.7.3) (2023-12-23)
 
 
