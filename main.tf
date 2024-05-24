@@ -5,6 +5,11 @@ data "azurerm_user_assigned_identity" "this" {
   resource_group_name = azurerm_databricks_workspace.this.managed_resource_group_name
 }
 
+data "azurerm_storage_account" "this" {
+  name                = azurerm_databricks_workspace.this.custom_parameters[0].storage_account_name
+  resource_group_name = azurerm_databricks_workspace.this.managed_resource_group_name
+}
+
 resource "azurerm_databricks_workspace" "this" {
   name                                                = var.workspace_name
   resource_group_name                                 = var.resource_group
@@ -21,6 +26,9 @@ resource "azurerm_databricks_workspace" "this" {
   # Creates Storage Account identity used for DBFS encryption
   customer_managed_key_enabled = alltrue([var.sku == "premium", var.managed_storage_account_identity_enabled]) ? true : false
 
+  default_storage_firewall_enabled = alltrue([var.storage_firewall_enabled, var.access_connector_enabled])
+  access_connector_id              = try(azurerm_databricks_access_connector.this[0].id, null)
+
   custom_parameters {
     no_public_ip                                         = var.no_public_ip
     virtual_network_id                                   = var.network_id
@@ -30,7 +38,7 @@ resource "azurerm_databricks_workspace" "this" {
     private_subnet_network_security_group_association_id = var.private_subnet_nsg_association_id
   }
 
-  depends_on = [azurerm_key_vault_access_policy.databricks_ws_service]
+  depends_on = [azurerm_key_vault_access_policy.databricks_ws_service, azurerm_databricks_access_connector.this]
 }
 
 resource "azurerm_databricks_access_connector" "this" {

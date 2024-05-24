@@ -194,3 +194,9 @@ variable "managed_dbfs_cmk_key_vault_key_id" {
   description = "Key Vault key ID used for Databricks DBFS encryption"
   default     = null
 }
+
+variable "storage_firewall_enabled" {
+  type        = bool
+  description = "Boolean flag that determines whether public access is disallowed"
+  default     = true
+}
