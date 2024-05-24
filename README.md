@@ -125,13 +125,13 @@ module "databricks_workspace" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.71.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.104.2 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 3.71.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 3.104.2 |
 
 ## Modules
 
@@ -150,6 +150,7 @@ No modules.
 | [azurerm_monitor_diagnostic_setting.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
 | [azurerm_monitor_diagnostic_categories.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/monitor_diagnostic_categories) | data source |
+| [azurerm_storage_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/storage_account) | data source |
 | [azurerm_user_assigned_identity.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/user_assigned_identity) | data source |
 
 ## Inputs
@@ -185,6 +186,7 @@ No modules.
 | <a name="input_public_subnet_nsg_association_id"></a> [public\_subnet\_nsg\_association\_id](#input\_public\_subnet\_nsg\_association\_id) | The resource ID of the azurerm\_subnet\_network\_security\_group\_association resource which is referred to by the public\_subnet\_name field. Required if virtual\_network\_id is set | `string` | n/a | yes |
 | <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group) | The name of the resource group in which to create the storage account | `string` | n/a | yes |
 | <a name="input_sku"></a> [sku](#input\_sku) | The sku to use for the Databricks Workspace: [standard\|premium\|trial] | `string` | `"premium"` | no |
+| <a name="input_storage_firewall_enabled"></a> [storage\_firewall\_enabled](#input\_storage\_firewall\_enabled) | Boolean flag that determines whether public access is disallowed | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the resource | `map(string)` | `{}` | no |
 | <a name="input_workspace_name"></a> [workspace\_name](#input\_workspace\_name) | Databricks Workspace name | `string` | n/a | yes |
 
@@ -195,6 +197,7 @@ No modules.
 | <a name="output_access_connector_id"></a> [access\_connector\_id](#output\_access\_connector\_id) | Databricks Access Connector's Id |
 | <a name="output_access_connector_identity"></a> [access\_connector\_identity](#output\_access\_connector\_identity) | Databricks Access Connector's Identities list |
 | <a name="output_databricks_client_id_identity"></a> [databricks\_client\_id\_identity](#output\_databricks\_client\_id\_identity) | The Client ID of the User Assigned Identity. |
+| <a name="output_databricks_managed_storage_account_id"></a> [databricks\_managed\_storage\_account\_id](#output\_databricks\_managed\_storage\_account\_id) | Azure Databricks Workspace Managed Storage Account ID. |
 | <a name="output_databricks_principal_id_identity"></a> [databricks\_principal\_id\_identity](#output\_databricks\_principal\_id\_identity) | The Service Principal ID of the User Assigned Identity. |
 | <a name="output_id"></a> [id](#output\_id) | Azure Databricks Resource ID |
 | <a name="output_sku"></a> [sku](#output\_sku) | Azure Databricks Workspace SKU type |
