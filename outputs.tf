@@ -42,3 +42,8 @@ output "databricks_managed_storage_account_id" {
   value       = data.azurerm_storage_account.this.id
   description = "Azure Databricks Workspace Managed Storage Account ID."
 }
+
+output "databricks_disk_encryption_set_id" {
+  value       = azurerm_databricks_workspace.this.disk_encryption_set_id
+  description = "The ID of Managed Disk Encryption Set created by the Databricks Workspace."
+}
