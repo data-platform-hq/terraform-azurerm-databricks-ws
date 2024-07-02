@@ -197,6 +197,7 @@ No modules.
 | <a name="output_access_connector_id"></a> [access\_connector\_id](#output\_access\_connector\_id) | Databricks Access Connector's Id |
 | <a name="output_access_connector_identity"></a> [access\_connector\_identity](#output\_access\_connector\_identity) | Databricks Access Connector's Identities list |
 | <a name="output_databricks_client_id_identity"></a> [databricks\_client\_id\_identity](#output\_databricks\_client\_id\_identity) | The Client ID of the User Assigned Identity. |
+| <a name="output_databricks_disk_encryption_set_id"></a> [databricks\_disk\_encryption\_set\_id](#output\_databricks\_disk\_encryption\_set\_id) | The ID of Managed Disk Encryption Set created by the Databricks Workspace. |
 | <a name="output_databricks_managed_storage_account_id"></a> [databricks\_managed\_storage\_account\_id](#output\_databricks\_managed\_storage\_account\_id) | Azure Databricks Workspace Managed Storage Account ID. |
 | <a name="output_databricks_principal_id_identity"></a> [databricks\_principal\_id\_identity](#output\_databricks\_principal\_id\_identity) | The Service Principal ID of the User Assigned Identity. |
 | <a name="output_id"></a> [id](#output\_id) | Azure Databricks Resource ID |
