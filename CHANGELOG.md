@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.8.0...v1.8.1) (2024-07-02)
+
+
+### Bug Fixes
+
+* add disk_encryption_set_id to outputs ([d1f1564](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/d1f1564c48d6cd78c0f88f0aad722b8e6ee8a14d))
+
 # [1.8.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.7.3...v1.8.0) (2024-05-24)
 
 
