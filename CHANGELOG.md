@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.8.1...v1.9.0) (2024-09-10)
+
+
+### Features
+
+* upgrade to AzureRM v4 ([8a75e2f](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/commit/8a75e2fbbcf707f1a461dc32fb4158beab705808))
+
 ## [1.8.1](https://github.com/data-platform-hq/terraform-azurerm-databricks-ws/compare/v1.8.0...v1.8.1) (2024-07-02)
 
 
