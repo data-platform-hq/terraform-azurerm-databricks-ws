@@ -124,14 +124,14 @@ module "databricks_workspace" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4.0.1 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4.0.1 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 4.0 |
 
 ## Modules
 
@@ -163,15 +163,15 @@ No modules.
 | <a name="input_diagnostics_name"></a> [diagnostics\_name](#input\_diagnostics\_name) | Diagnostic Settings optional name | `string` | `null` | no |
 | <a name="input_global_databricks_object_id"></a> [global\_databricks\_object\_id](#input\_global\_databricks\_object\_id) | Global 'AzureDatabricks' SP object id | `string` | `"9b38785a-6e08-4087-a0c4-20634343f21f"` | no |
 | <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | Key Vault ID | `string` | `null` | no |
-| <a name="input_key_vault_key_permissions"></a> [key\_vault\_key\_permissions](#input\_key\_vault\_key\_permissions) | List of key vault key permissions for Databricks Global Service Principal | `list(string)` | <pre>[<br>  "Get",<br>  "List",<br>  "Encrypt",<br>  "Decrypt",<br>  "WrapKey",<br>  "UnwrapKey",<br>  "GetRotationPolicy"<br>]</pre> | no |
-| <a name="input_key_vault_secret_permissions"></a> [key\_vault\_secret\_permissions](#input\_key\_vault\_secret\_permissions) | List of key vault secret permissions for Databricks Global Service Principal | `list(string)` | <pre>[<br>  "Get",<br>  "List"<br>]</pre> | no |
+| <a name="input_key_vault_key_permissions"></a> [key\_vault\_key\_permissions](#input\_key\_vault\_key\_permissions) | List of key vault key permissions for Databricks Global Service Principal | `list(string)` | <pre>[<br/>  "Get",<br/>  "List",<br/>  "Encrypt",<br/>  "Decrypt",<br/>  "WrapKey",<br/>  "UnwrapKey",<br/>  "GetRotationPolicy"<br/>]</pre> | no |
+| <a name="input_key_vault_secret_permissions"></a> [key\_vault\_secret\_permissions](#input\_key\_vault\_secret\_permissions) | List of key vault secret permissions for Databricks Global Service Principal | `list(string)` | <pre>[<br/>  "Get",<br/>  "List"<br/>]</pre> | no |
 | <a name="input_location"></a> [location](#input\_location) | Azure location | `string` | n/a | yes |
 | <a name="input_log_analytics_workspace"></a> [log\_analytics\_workspace](#input\_log\_analytics\_workspace) | Log Analytics Workspace Name to ID map | `map(string)` | `{}` | no |
 | <a name="input_managed_dbfs_cmk_enabled"></a> [managed\_dbfs\_cmk\_enabled](#input\_managed\_dbfs\_cmk\_enabled) | Boolean flag that determines whether Workspace DBFS is encrypted with CMK key | `bool` | `false` | no |
 | <a name="input_managed_dbfs_cmk_key_vault_key_id"></a> [managed\_dbfs\_cmk\_key\_vault\_key\_id](#input\_managed\_dbfs\_cmk\_key\_vault\_key\_id) | Key Vault key ID used for Databricks DBFS encryption | `string` | `null` | no |
 | <a name="input_managed_disk_cmk_enabled"></a> [managed\_disk\_cmk\_enabled](#input\_managed\_disk\_cmk\_enabled) | Boolean flag that determines whether Data Plane Disks are encrypted with CMK key | `bool` | `false` | no |
 | <a name="input_managed_disk_cmk_key_vault_key_id"></a> [managed\_disk\_cmk\_key\_vault\_key\_id](#input\_managed\_disk\_cmk\_key\_vault\_key\_id) | Key Vault key ID used for Data Plane Disks encryption | `string` | `null` | no |
-| <a name="input_managed_disk_cmk_policy_enabled"></a> [managed\_disk\_cmk\_policy\_enabled](#input\_managed\_disk\_cmk\_policy\_enabled) | Create Key Vault Policy for Databricks Workspace Managed Disk identity.<br>Upon initial creation of Workspace with Disk CMK encryption, Disk Encryption Set with managed identity is created, it is used for cluster's disks encryption.<br><br>However, if Workspace already provisioned and have to updated to use Managed Disk encryption, then 'Disk Encryption Set' is known after creation.<br>Which means, that you have to first apply with 'managed\_disk\_cmk\_enabled = true' only and set 'managed\_disk\_cmk\_policy\_enabled' to false, because identity is unknown.<br>On next apply, set 'managed\_disk\_cmk\_policy\_enabled' to true, because identity of Managed Disk is created and known. | `bool` | `true` | no |
+| <a name="input_managed_disk_cmk_policy_enabled"></a> [managed\_disk\_cmk\_policy\_enabled](#input\_managed\_disk\_cmk\_policy\_enabled) | Create Key Vault Policy for Databricks Workspace Managed Disk identity.<br/>Upon initial creation of Workspace with Disk CMK encryption, Disk Encryption Set with managed identity is created, it is used for cluster's disks encryption.<br/><br/>However, if Workspace already provisioned and have to updated to use Managed Disk encryption, then 'Disk Encryption Set' is known after creation.<br/>Which means, that you have to first apply with 'managed\_disk\_cmk\_enabled = true' only and set 'managed\_disk\_cmk\_policy\_enabled' to false, because identity is unknown.<br/>On next apply, set 'managed\_disk\_cmk\_policy\_enabled' to true, because identity of Managed Disk is created and known. | `bool` | `true` | no |
 | <a name="input_managed_resource_group_name"></a> [managed\_resource\_group\_name](#input\_managed\_resource\_group\_name) | The name of the managed resource group | `string` | `null` | no |
 | <a name="input_managed_services_cmk_enabled"></a> [managed\_services\_cmk\_enabled](#input\_managed\_services\_cmk\_enabled) | Encrypts Databricks Workspaces Services like Notebooks and Queries, once CMK type of encryption is enabled it won't be possible to switch back to default Microsoft Managed Encryption. | `bool` | `false` | no |
 | <a name="input_managed_services_cmk_key_vault_key_id"></a> [managed\_services\_cmk\_key\_vault\_key\_id](#input\_managed\_services\_cmk\_key\_vault\_key\_id) | Key Vault key ID used for Databricks Managed Services encryption | `string` | `null` | no |
